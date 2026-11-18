@@ -125,6 +125,8 @@ WorldLens/
 
 ## Wireframes
 
+> Viewing tip: some school and work networks block GitHub's image and PDF hosting (`raw.githubusercontent.com`). If the wireframes or the PDF don't load, switch to a personal network such as a home connection or phone hotspot.
+
 | Home / Search | Country List |
 |---|---|
 | ![Home / Search](docs/wireframes/wireframe-1-home-search.png) | ![Country List](docs/wireframes/wireframe-2-country-list.png) |
