@@ -1,56 +1,131 @@
-# Welcome to your Expo app 👋
+# WorldLens
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native (Expo) app that works like a pocket encyclopedia for countries. Search any country and get one complete profile: description, key facts, leaders, languages, currency, current weather in the capital, and its states or provinces with their cities.
 
-## Get started
+> Status: Phase 1 (proposal). This README will be updated as the app is built.
 
-1. Install dependencies
+**Team:** The Swaggers (Abdulquadri Kuku, Yaa Adarkwa, Marc Kellyanne)
 
-   ```bash
-   npm install
-   ```
+## Project Overview
 
-2. Start the app
+WorldLens fetches live data from public APIs using Axios and async/await. It does not use a local database or hardcoded country data.
 
-   ```bash
-   npx expo start
-   ```
+**Target users:** students, travelers, and anyone curious about the world.
 
-In the output, you'll find options to open the app in a
+**Example:** search "Nigeria" to see Abuja as the capital, the naira as the currency, the president, the official and widely spoken languages, the current weather, and the 36 states plus the Federal Capital Territory. Tap a state to see its cities.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Features
 
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Search countries by name and filter by region
+- Results list with flag, capital, and population
+- Country profile: About, Quick Facts, Leadership, Languages, Currency, Weather, States or Provinces, Neighbors
+- State or province detail with a list of cities
+- Favorites
+- Loading spinners, error messages with retry, and empty states
 
-## Get a fresh project
+## Screens
 
-When you're ready, run:
+1. Home / Search
+2. Country List
+3. Country Profile
+4. State or Province Detail
+5. Favorites
+
+## Tech Stack
+
+- React Native with Expo
+- React Navigation (Bottom Tabs + Stack)
+- Axios
+- React Hooks (`useState`, `useEffect`, `useReducer`) and custom hooks (`useApiData`, `useCountryProfile`, `useFavorites`)
+- FlatList
+- Expo Vector Icons (Ionicons, MaterialIcons)
+
+## APIs Used
+
+| Data | API |
+|---|---|
+| Country facts | REST Countries (https://restcountries.com) |
+| Weather | Open-Meteo (https://open-meteo.com) |
+| Description and photo | Wikipedia REST API |
+| Leaders, extra languages | Wikidata |
+| States, provinces, cities | CountriesNow (https://countriesnow.space) |
+| Exchange rate (optional) | Frankfurter or open.er-api.com |
+
+None of these APIs require an API key.
+
+## Setup
+
+Prerequisites: Node.js (LTS), npm, and the Expo Go app on your phone or an emulator.
 
 ```bash
-npm run reset-project
+# 1. Clone the repository
+git clone https://github.com/quadrikuku20-cpu/WorldLens.git
+cd WorldLens
+
+# 2. Install dependencies
+npm install
+
+# 3. Start the app
+npx expo start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Then scan the QR code with Expo Go, or press `a` (Android emulator) or `i` (iOS simulator).
 
-### Other setup steps
+If you are starting the project from scratch, these are the main packages:
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+npx create-expo-app WorldLens
+cd WorldLens
+npx expo install react-native-screens react-native-safe-area-context
+npm install axios @react-navigation/native @react-navigation/native-stack @react-navigation/bottom-tabs
+npm install @expo/vector-icons
+```
 
-## Learn more
+## Folder Structure
 
-To learn more about developing your project with Expo, look at the following resources:
+```
+WorldLens/
+  App.js
+  src/
+    components/     reusable UI (SearchBar, CountryCard, InfoRow, ...)
+    screens/        Home, CountryList, CountryProfile, StateDetail, Favorites
+    hooks/          useApiData, useCountryProfile, useFavorites
+    services/       Axios API functions
+    navigation/     tab and stack navigators
+    context/        favorites reducer
+    utils/
+  assets/
+  docs/             proposal and wireframes
+  README.md
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Team and Contributions
 
-## Join the community
+| Member | Responsibilities |
+|---|---|
+| Abdulquadri Kuku | Project setup, navigation, Home and Country List screens, GitHub management |
+| Yaa Adarkwa | API services, custom hooks, Country Profile data logic |
+| Marc Kellyanne | Reusable components, styling and responsive layout, Favorites screen, wireframes, README |
 
-Join our community of developers creating universal apps.
+## Development Timeline
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Week | Milestone |
+|---|---|
+| 1 | Proposal, wireframes, GitHub repo, project setup |
+| 2 | Navigation, Home screen, SearchBar, Country List |
+| 3 | Country Profile with Wikipedia, Open-Meteo, and currency data |
+| 4 | Leadership (Wikidata), States and cities, Favorites, neighbor navigation |
+| 5 | Styling, responsive layout, loading and error states, testing |
+| 6 | Cleanup, README, screenshots, video presentation |
+
+## Screenshots
+
+Wireframes are in `docs/wireframes`. App screenshots will be added here once the screens are built.
+
+| Home / Search | Country List | Country Profile |
+|---|---|---|
+| _coming soon_ | _coming soon_ | _coming soon_ |
+
+## License
+
+For educational use as part of a course project.
