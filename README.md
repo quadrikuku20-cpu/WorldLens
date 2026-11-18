@@ -118,13 +118,24 @@ WorldLens/
 | 5 | Styling, responsive layout, loading and error states, testing |
 | 6 | Cleanup, README, screenshots, video presentation |
 
+## Proposal
+
+- [Phase 1 proposal (PDF)](docs/WorldLens_Proposal.pdf), which opens right here on GitHub
+- [Phase 1 proposal (Word)](docs/WorldLens_Proposal.docx), which needs to be downloaded
+
+## Wireframes
+
+| Home / Search | Country List |
+|---|---|
+| ![Home / Search](docs/wireframes/wireframe-1-home-search.png) | ![Country List](docs/wireframes/wireframe-2-country-list.png) |
+
+| Country Profile (Nigeria) | State Detail (Lagos) |
+|---|---|
+| ![Country Profile](docs/wireframes/wireframe-3-country-profile.png) | ![State Detail](docs/wireframes/wireframe-4-state-detail.png) |
+
 ## Screenshots
 
-Wireframes are in `docs/wireframes`. App screenshots will be added here once the screens are built.
-
-| Home / Search | Country List | Country Profile |
-|---|---|---|
-| _coming soon_ | _coming soon_ | _coming soon_ |
+App screenshots will be added here once the screens are built.
 
 ## License
 
