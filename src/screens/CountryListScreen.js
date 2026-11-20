@@ -62,7 +62,12 @@ export default function CountryListScreen({ route, navigation }) {
           // Open the profile and pass the country name along
           onPress={() => navigation.navigate('CountryProfile', { name: item.name })}
         >
-          <Image source={{ uri: item.flag }} style={styles.flag} />
+                    {/* Show an empty gray box if a country has no flag, so the app never crashes */}
+          {item.flag ? (
+            <Image source={{ uri: item.flag }} style={styles.flag} />
+          ) : (
+            <View style={styles.flag} />
+          )}
           <View style={styles.info}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.detail}>Capital: {item.capital}</Text>
