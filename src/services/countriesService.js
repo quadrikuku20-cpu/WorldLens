@@ -1,18 +1,25 @@
-import { countriesApi } from './api';
+import { countriesApi } from "./api";
 
 // Ask the API for only the fields the list needs. This keeps responses small.
 // capitals is an array of objects, flag.url_png is the flag image address.
-const LIST_FIELDS = 'names.common,codes.alpha_3,capitals,population,flag.url_png,region';
-
+const LIST_FIELDS = 'names.common,codes.alpha_3,codes.alpha_2,capitals,population,flag.url_png,region';
 // Convert one v5 country object into the simple shape our screens use.
 // If the API ever changes its format again, this is the only place to fix.
 function simplify(country) {
+  const alpha2 = country.codes?.alpha_2;
+  const alpha3 = country.codes?.alpha_3;
+  const name = country.names?.common;
   return {
-    code: country.codes?.alpha_3,
-    name: country.names?.common,
+    // Some entries have no 3-letter code, so we fall back to other values.
+    // The list needs a unique key for every row.
+    code: alpha3 ?? alpha2 ?? name,
+    name,
     capital: country.capitals?.[0]?.name ?? 'N/A', // some countries have no capital
     population: country.population,
-    flag: country.flag?.url_png,
+    // Use the flag from the API, or build the image address from the 2-letter code
+    flag:
+      country.flag?.url_png ||
+      (alpha2 ? `https://flags.restcountries.com/v5/w640/${alpha2.toLowerCase()}.png` : null),
     region: country.region,
   };
 }
@@ -22,13 +29,14 @@ function simplify(country) {
 function getObjects(response) {
   const objects = response.data?.data?.objects;
   if (!Array.isArray(objects)) throw new Error('Unexpected response from the countries API');
-  return objects;
+  // Skip any entry that has no name, because we can't show it
+  return objects.filter((object) => object.names?.common);
 }
 
 // Search countries by common name. Partial matches work ("niger" returns Niger and Nigeria).
 export async function searchCountries(text) {
   try {
-    const response = await countriesApi.get('/names.common', {
+    const response = await countriesApi.get("/names.common", {
       params: { q: text, response_fields: LIST_FIELDS, limit: 100 },
     });
     return getObjects(response).map(simplify);
@@ -43,9 +51,12 @@ export async function searchCountries(text) {
 // Get every country in a region: "Africa", "Americas", "Asia", "Europe", "Oceania".
 // The free plan allows up to 100 per request, which covers every region.
 export async function getCountriesByRegion(region) {
-  const response = await countriesApi.get(`/region/${encodeURIComponent(region)}`, {
-    params: { response_fields: LIST_FIELDS, limit: 100 },
-  });
+  const response = await countriesApi.get(
+    `/region/${encodeURIComponent(region)}`,
+    {
+      params: { response_fields: LIST_FIELDS, limit: 100 },
+    },
+  );
   return getObjects(response).map(simplify);
 }
 
