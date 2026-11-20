@@ -6,10 +6,10 @@ export const FavoritesContext = createContext(null);
 function favoritesReducer(state, action) {
   switch (action.type) {
     case 'TOGGLE': {
-      const exists = state.some((c) => c.code === action.country.code);
+      const exists = state.some((country) => country.code === action.country.code);
       // Already saved: remove it. Not saved yet: add it.
       return exists
-        ? state.filter((c) => c.code !== action.country.code)
+        ? state.filter((country) => country.code !== action.country.code)
         : [...state, action.country];
     }
     default:
@@ -17,12 +17,13 @@ function favoritesReducer(state, action) {
   }
 }
 
-// Wrap the app in this so every screen can read and change the favorites
+// Wrap the app in this so every screen can read and change the favorites.
+// The list resets when the app closes, which is fine for this project.
 export function FavoritesProvider({ children }) {
   const [favorites, dispatch] = useReducer(favoritesReducer, []);
 
   const toggleFavorite = (country) => dispatch({ type: 'TOGGLE', country });
-  const isFavorite = (code) => favorites.some((c) => c.code === code);
+  const isFavorite = (code) => favorites.some((country) => country.code === code);
 
   return (
     <FavoritesContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>
@@ -30,6 +31,3 @@ export function FavoritesProvider({ children }) {
     </FavoritesContext.Provider>
   );
 }
-
-// TODO (Marc): wrap <AppNavigator /> in <FavoritesProvider> inside App.js.
-// The list resets when the app closes. That is fine for this project.

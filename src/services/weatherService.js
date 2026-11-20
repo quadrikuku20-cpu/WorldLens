@@ -1,6 +1,6 @@
 import { weatherApi } from './api';
 
-// Current weather at a latitude/longitude (we use the capital city's position)
+// Current weather at a position (we use the capital city's latitude and longitude)
 export async function getCurrentWeather(latitude, longitude) {
   const response = await weatherApi.get('/forecast', {
     params: {
@@ -17,6 +17,3 @@ export async function getCurrentWeather(latitude, longitude) {
     code: current.weather_code,                      // turned into words by weatherDescription()
   };
 }
-
-// TODO (Yaa): add a 3-day forecast. Add `daily: 'temperature_2m_max,temperature_2m_min'`
-// to the params and return the next 3 days. Show them in the weather section.

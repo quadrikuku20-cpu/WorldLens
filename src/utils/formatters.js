@@ -20,11 +20,3 @@ export function weatherDescription(code) {
   if (code >= 95) return 'Thunderstorm';
   return 'Unknown';
 }
-
-// languages is an array like [{ name: 'English', ... }]. Return just the names.
-export function languageNames(languages) {
-  return (languages ?? []).map((language) => language.name);
-}
-
-// TODO (Yaa): add currencyText(currencies). First console.log the `currencies` field of a
-// country to see its exact shape, then return text like "Nigerian naira (₦)".
