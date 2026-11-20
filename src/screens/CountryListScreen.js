@@ -15,8 +15,9 @@ export default function CountryListScreen({ route, navigation }) {
     [query, region]
   );
 
-  // Sort A to Z by country name (copy the array first so we don't change the original)
-  const countries = data ? [...data].sort((a, b) => a.name.common.localeCompare(b.name.common)) : [];
+  // The API already sorts A to Z, but we sort again to be safe
+  // (copy the array first so we don't change the original)
+  const countries = data ? [...data].sort((a, b) => a.name.localeCompare(b.name)) : [];
 
   // TODO (Marc): replace this loading block with your <LoadingSpinner /> component
   if (loading) {
@@ -45,7 +46,7 @@ export default function CountryListScreen({ route, navigation }) {
     <FlatList
       data={countries}
       // keyExtractor gives each row a unique id: the 3-letter country code
-      keyExtractor={(item) => item.cca3}
+      keyExtractor={(item) => item.code}
       contentContainerStyle={styles.list}
       ListHeaderComponent={
         <Text style={styles.count}>
@@ -59,14 +60,14 @@ export default function CountryListScreen({ route, navigation }) {
         <TouchableOpacity
           style={styles.card}
           // Open the profile and pass the country name along
-          onPress={() => navigation.navigate('CountryProfile', { name: item.name.common })}
+          onPress={() => navigation.navigate('CountryProfile', { name: item.name })}
         >
-          <Image source={{ uri: item.flags.png }} style={styles.flag} />
+          <Image source={{ uri: item.flag }} style={styles.flag} />
           <View style={styles.info}>
-            <Text style={styles.name}>{item.name.common}</Text>
-            {/* capital is an array and can be missing, so we read it carefully */}
-            <Text style={styles.detail}>Capital: {item.capital?.[0] ?? 'N/A'}</Text>
-            <Text style={styles.detail}>Population: {item.population.toLocaleString()}</Text>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={styles.detail}>Capital: {item.capital}</Text>
+            {/* population can be missing, so we fall back to N/A */}
+            <Text style={styles.detail}>Population: {item.population?.toLocaleString() ?? 'N/A'}</Text>
           </View>
           <Ionicons name="chevron-forward" size={20} color="#6B7280" />
         </TouchableOpacity>
